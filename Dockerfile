@@ -53,7 +53,11 @@ RUN --mount=type=cache,target=/var/cache/apk \
 
 # Install pkgs to use curo
 # see: https://www.programmerhat.com/ip-command-not-found/
-RUN apt-get install -y iproute2 sudo
+RUN apt-get install -y iproute2 sudo iputils-ping
+
+# Setup to create Network Namespace
+COPY init.bash /init.bash
+RUN sudo chmod u+x /init.bash
 
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
