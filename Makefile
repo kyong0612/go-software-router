@@ -7,7 +7,16 @@ today:
 	@echo "Today is ${NOW}"
 	@touch docs/${NOW}.md
 
-PHOBY: run
-run:
-	@go build -o curo
-	@./curo
+PHOBY: up
+up:
+	@docker compose up -d
+
+PHOBY: reset
+reset:
+	@docker compose down
+	@docker compose build --no-cache
+	@docker compose up -d
+
+PHOBY: bash
+bash:
+	@docker compose exec server bash
