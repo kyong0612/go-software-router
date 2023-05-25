@@ -48,7 +48,12 @@ RUN --mount=type=cache,target=/var/cache/apk \
         ca-certificates \
         tzdata \
         && \
-        update-ca-certificates
+        update-ca-certificates 
+
+
+# Install pkgs to use curo
+# see: https://www.programmerhat.com/ip-command-not-found/
+RUN apt-get install -y iproute2 sudo
 
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
