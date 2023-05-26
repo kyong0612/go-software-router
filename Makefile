@@ -16,7 +16,6 @@ reset:
 	@docker compose down
 	@docker compose build --no-cache
 	@docker compose up -d
-	@docker compose exec -it --user root server ./init.bash
 
 PHOBY: bash
 bash:

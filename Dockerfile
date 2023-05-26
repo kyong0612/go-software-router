@@ -57,20 +57,21 @@ RUN apt-get install -y iproute2 sudo iputils-ping
 
 # Setup to create Network Namespace
 COPY init.bash /init.bash
-RUN sudo chmod u+x /init.bash
+RUN sudo chmod u+x /init.bash && /init.bash
 
-# Create a non-privileged user that the app will run under.
-# See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
-ARG UID=10001
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    appuser
-USER appuser
+# NOTE: comment out to use syscall methods
+# # Create a non-privileged user that the app will run under.
+# # See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
+# ARG UID=10001
+# RUN adduser \
+#     --disabled-password \
+#     --gecos "" \
+#     --home "/nonexistent" \
+#     --shell "/sbin/nologin" \
+#     --no-create-home \
+#     --uid "${UID}" \
+#     appuser
+# USER appuser
 
 # Copy the executable from the "build" stage.
 COPY --from=build /bin/server /bin/
