@@ -8,12 +8,12 @@ import (
 var IGNORE_INTERFACES = []string{"lo", "bond0", "dummy0", "tunl0", "sit0"}
 
 type netDevice struct {
-	name     string
-	macaddr  [6]uint8
-	socket   int
-	sockaddr syscall.SockaddrLinklayer
-	// etheHeader ethernetHeader
-	// ipdev      ipDevice // 2章で追加
+	name       string
+	macaddr    [6]uint8
+	socket     int
+	sockaddr   syscall.SockaddrLinklayer
+	etheHeader ethernetHeader
+	ipdev      ipDevice // 2章で追加
 }
 
 func isIgnoreInterfaces(name string) bool {
@@ -55,18 +55,18 @@ func (netdev *netDevice) netDevicePoll(mode string) error {
 		fmt.Printf("Received %d bytes from %s: %x\n", n, netdev.name, recvbuffer[:n])
 	} else {
 		// 2章から追加
-		// ethernetInput(netdev, recvbuffer[:n])
+		ethernetInput(netdev, recvbuffer[:n])
 	}
 
 	return nil
 }
 
-// // インターフェイス名からデバイスを探す
-// func getnetDeviceByName(name string) *netDevice {
-// 	for _, dev := range netDeviceList {
-// 		if name == dev.name {
-// 			return dev
-// 		}
-// 	}
-// 	return &netDevice{}
-// }
+// インターフェイス名からデバイスを探す
+func getnetDeviceByName(name string) *netDevice {
+	for _, dev := range netDeviceList {
+		if name == dev.name {
+			return dev
+		}
+	}
+	return &netDevice{}
+}
