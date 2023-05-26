@@ -13,8 +13,19 @@ services:
     build:
       context: .
       target: final
+      dockerfile: Dockerfile
     ports:
       - 3333:3333
+    tty: true
+    privileged: true
+  
+  local:
+    container_name: local
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    ports:
+      - 3334:3334
     tty: true
     privileged: true
 
