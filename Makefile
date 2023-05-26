@@ -11,9 +11,13 @@ PHOBY: up
 up:
 	@docker compose up -d
 
+PHOBY: down
+down:
+	@docker compose down
+
 PHOBY: reset
 reset:
-	@docker compose down
+	@make down
 	@docker image rm go-software-router-server
 	@docker compose build --no-cache
 	@docker compose up -d
