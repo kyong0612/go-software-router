@@ -57,7 +57,7 @@ RUN apt-get install -y iproute2 sudo iputils-ping
 
 # Setup to create Network Namespace
 COPY init.bash /init.bash
-RUN sudo chmod u+x /init.bash && /init.bash
+RUN sudo chmod u+x /init.bash
 
 # NOTE: comment out to use syscall methods
 # # Create a non-privileged user that the app will run under.
@@ -80,4 +80,4 @@ COPY --from=build /bin/server /bin/
 EXPOSE 3333
 
 # What the container should run when it is started.
-ENTRYPOINT [ "/bin/server" ]
+# ENTRYPOINT [ "/bin/server" ]
